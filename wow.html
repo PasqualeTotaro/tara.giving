@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>wow</title>
+  <style>
+    @font-face {
+      font-family: 'HiraKaku';
+      src: url('/fonts/HiraKakuStdN-W8.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      background: #E35FBC;
+      font-family: 'HiraKaku', system-ui, sans-serif;
+    }
+    .bio {
+      color: #FFFFFF;
+      font-size: 2rem;
+      line-height: 1.4;
+      padding: 5%;
+      max-width: 40ch;
+      height: 80vh;
+      box-sizing: border-box;
+      overflow: hidden;
+      visibility: hidden;
+      overflow-wrap: anywhere;
+    }
+    .bio-inner p {
+      margin: 0 0 0.7em;
+    }
+    .bio-inner p:last-child {
+      margin-bottom: 0;
+    }
+    .email {
+      color: #44B724;
+      text-decoration: none;
+    }
+    .email:hover {
+      text-decoration: underline;
+    }
+    .corner-img {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 60vw;
+      height: auto;
+      display: block;
+      pointer-events: none;
+    }
+    @media (max-aspect-ratio: 1/1) {
+      .corner-img {
+        width: 100vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bio">
+    <div class="bio-inner">
+      <p>Tara Atkinson is a breath of fresh air in a city of dreams gone stale.</p>
+      <p>She&rsquo;s from Los Angeles, went to school, came back because the tacos were too good.</p>
+      <p>She has played on many scores.</p>
+      <p>She also composes.</p>
+      <p>Hire her :<br>
+        <span class="email">tarajatkinson@gmail.com</span>
+      </p>
+    </div>
+  </div>
+  <img class="corner-img" src="/images/tara.png" alt="Tara Atkinson">
+  <script>
+    function fitText() {
+      const bio = document.querySelector('.bio');
+      let lo = 8, hi = 600;
+      while (hi - lo > 0.5) {
+        const mid = (lo + hi) / 2;
+        bio.style.fontSize = mid + 'px';
+        if (bio.scrollHeight <= bio.clientHeight) {
+          lo = mid;
+        } else {
+          hi = mid;
+        }
+      }
+      const isTall = window.innerWidth < window.innerHeight;
+      const factor = isTall ? 0.9 : 1;
+      bio.style.fontSize = (lo * factor) + 'px';
+    }
+    function fitAndReveal() {
+      fitText();
+      document.querySelector('.bio').style.visibility = 'visible';
+    }
+    window.addEventListener('resize', fitText);
+    const fontsReady = (document.fonts && document.fonts.ready)
+      ? document.fonts.ready
+      : Promise.resolve();
+    fontsReady.then(fitAndReveal);
+  </script>
+</body>
+</html>
